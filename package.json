@@ -1,0 +1,50 @@
+{
+  "name": "grunt-azure-blobs-acl",
+  "description": "A simple task to set up blob access control list",
+  "version": "0.1.0",  
+  "homepage": "https://github.com/matiasdecarli/grunt-azure-blob-acl",
+  "author": {
+    "name": "Matias De Carli",
+    "email": "matiasdecarli@gmail.com",
+    "url": "http://matiasdecarli.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/matiasdecarli/grunt-azure-blobs-acl.git"
+  },
+  "bugs": {
+    "url": "https://github.com/matiasdecarli/grunt-azure-blobs-acl/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/matiasdecarli/grunt-azure-blobs-acl/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies": {  
+    "azure": "^0.9.7",    
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-nodeunit": "^0.3.3",
+    "grunt": "~0.4.5"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin",
+    "azure",
+    "grunt",
+    "blob",
+    "cors",
+    "acl"
+  ]
+}
