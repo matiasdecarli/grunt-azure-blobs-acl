@@ -14,6 +14,12 @@ var crypto = require('crypto'),
 
 module.exports = function(grunt) {  
   grunt.registerTask('azure-blobs-acl', 'Log some stuff.', function() {
+    var done = this.async();
+    updateBlob(done);      
+  });  
+};
+
+  function updateBlob(){
     var MY_ACCOUNT_URL = 'https://' + process.env.AZURE_STORAGE_ACCOUNT + '.blob.core.windows.net';
     var MY_ACCOUNT_NAME = process.env.AZURE_STORAGE_ACCOUNT;
     var MY_ACCOUNT_HOST = process.env.AZURE_STORAGE_ACCOUNT  + '.blob.core.windows.net';
@@ -27,8 +33,8 @@ module.exports = function(grunt) {
                     '<AllowedOrigins>*</AllowedOrigins>'+
                     '<AllowedMethods>GET,PUT,POST,DELETE,OPTIONS</AllowedMethods>'+
                     '<MaxAgeInSeconds>50</MaxAgeInSeconds>'+
-                    '<ExposedHeaders>x-ms-meta-data*,x-ms-meta-customheader</ExposedHeaders>'+
-                    '<AllowedHeaders>x-ms-meta-target*,x-ms-meta-customheader</AllowedHeaders>'+
+                    '<ExposedHeaders>x-ms-blob-type*,Content-Type*</ExposedHeaders>'+
+                    '<AllowedHeaders>x-ms-blob-type*,Content-Type*</AllowedHeaders>'+
                 '</CorsRule>'+
             '</Cors>'+
             '<DefaultServiceVersion>2013-08-15</DefaultServiceVersion>'+
@@ -64,19 +70,19 @@ module.exports = function(grunt) {
     console.log("canonicalizedHeaders : " + canonicalizedHeaders);
     console.log("corsMD5 : " + corsMD5);
     console.log("key : " + key);
-    console.log("options : " + JSON.stringify(options));
+    console.log("options : " + JSON.stringify(options));    
+    
+    request.put(options, onPropertiesSet);    
+  }
 
-    function onPropertiesSet(error, response, body) {
+  function onPropertiesSet(error, response, body) {
         if (!error && response.statusCode == 202) {
             console.log("CORS: OK");
         }
         else {
             console.log("CORS: " + response.statusCode);
         }
-    }
-    request.put(options, onPropertiesSet);
-  });
-};
+    }    
 
   function buildCanonicalizedHeaders( headers ) {
 
