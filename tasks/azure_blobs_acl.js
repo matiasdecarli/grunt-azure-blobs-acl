@@ -13,13 +13,13 @@ var crypto = require('crypto'),
     request = require('request');
 
 module.exports = function(grunt) {  
-  grunt.registerTask('azure-blobs-acl', 'Log some stuff.', function() {
+  grunt.registerTask('azure-blobs-acl', 'Log some stuff.', function() {    
     var done = this.async();
-    updateBlob(done);      
+    updateBlob(this.options(),done);      
   });  
 };
 
-  function updateBlob(){
+  function updateBlob(options){
     var MY_ACCOUNT_URL = 'https://' + process.env.AZURE_STORAGE_ACCOUNT + '.blob.core.windows.net';
     var MY_ACCOUNT_NAME = process.env.AZURE_STORAGE_ACCOUNT;
     var MY_ACCOUNT_HOST = process.env.AZURE_STORAGE_ACCOUNT  + '.blob.core.windows.net';
@@ -30,11 +30,11 @@ module.exports = function(grunt) {
         '<StorageServiceProperties>'+
             '<Cors>'+
                 '<CorsRule>'+
-                    '<AllowedOrigins>*</AllowedOrigins>'+
-                    '<AllowedMethods>GET,PUT,POST,DELETE,OPTIONS</AllowedMethods>'+
-                    '<MaxAgeInSeconds>50</MaxAgeInSeconds>'+
-                    '<ExposedHeaders>x-ms-blob-type*,Content-Type*</ExposedHeaders>'+
-                    '<AllowedHeaders>x-ms-blob-type*,Content-Type*</AllowedHeaders>'+
+                    '<AllowedOrigins>' + options.allowedOrigins + '</AllowedOrigins>'+
+                    '<AllowedMethods>' + options.allowedMethods + '</AllowedMethods>'+
+                    '<MaxAgeInSeconds>' + options.maxAgeInSeconds + '</MaxAgeInSeconds>'+
+                    '<ExposedHeaders>' + options.exposedHeaders + '</ExposedHeaders>'+
+                    '<AllowedHeaders>' + options.allowedHeaders + '</AllowedHeaders>'+
                 '</CorsRule>'+
             '</Cors>'+
             '<DefaultServiceVersion>2013-08-15</DefaultServiceVersion>'+
@@ -65,12 +65,12 @@ module.exports = function(grunt) {
         headers: headers
     };
 
-    console.log("url : " + url);
-    console.log("canonicalizedResource : " + canonicalizedResource);
-    console.log("canonicalizedHeaders : " + canonicalizedHeaders);
-    console.log("corsMD5 : " + corsMD5);
-    console.log("key : " + key);
-    console.log("options : " + JSON.stringify(options));    
+    // console.log("url : " + url);
+    // console.log("canonicalizedResource : " + canonicalizedResource);
+    // console.log("canonicalizedHeaders : " + canonicalizedHeaders);
+    // console.log("corsMD5 : " + corsMD5);
+    // console.log("key : " + key);
+    // console.log("options : " + JSON.stringify(options));    
     
     request.put(options, onPropertiesSet);    
   }
