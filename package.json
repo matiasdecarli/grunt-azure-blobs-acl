@@ -1,7 +1,7 @@
 {
   "name": "grunt-azure-blobs-acl",
   "description": "A simple task to set up blob access control list",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "homepage": "https://github.com/matiasdecarli/grunt-azure-blob-acl",
   "author": {
     "name": "Matias De Carli",
