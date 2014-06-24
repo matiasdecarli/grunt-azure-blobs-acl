@@ -19,7 +19,7 @@ module.exports = function(grunt) {
   });  
 };
 
-  function updateBlob(options){
+  function updateBlob(options,done){
     var MY_ACCOUNT_URL = 'https://' + process.env.AZURE_STORAGE_ACCOUNT + '.blob.core.windows.net';
     var MY_ACCOUNT_NAME = process.env.AZURE_STORAGE_ACCOUNT;
     var MY_ACCOUNT_HOST = process.env.AZURE_STORAGE_ACCOUNT  + '.blob.core.windows.net';
@@ -70,19 +70,18 @@ module.exports = function(grunt) {
     // console.log("canonicalizedHeaders : " + canonicalizedHeaders);
     // console.log("corsMD5 : " + corsMD5);
     // console.log("key : " + key);
-    // console.log("options : " + JSON.stringify(options));    
+    // console.log("options : " + JSON.stringify(options));            
     
-    request.put(options, onPropertiesSet);    
-  }
-
-  function onPropertiesSet(error, response, body) {
+    request.put(options, function(error,response,body){
         if (!error && response.statusCode == 202) {
             console.log("CORS: OK");
         }
         else {
             console.log("CORS: " + response.statusCode);
-        }
-    }    
+        }    
+        done();        
+    });    
+  } 
 
   function buildCanonicalizedHeaders( headers ) {
 
